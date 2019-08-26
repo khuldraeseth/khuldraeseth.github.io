@@ -1,0 +1,202 @@
+<html><head><style>/* Style for the menu, possible positions/visibility */
+#__markdown-viewer__tools {
+  margin:0;
+  padding:0;
+  background:#555;
+  color:#eee;
+  box-shadow:0 -1px rgba(0,0,0,.5) inset;
+  border-radius: .5em;
+  max-width: 25%;
+  z-index: 2147483647;
+}
+
+#__markdown-viewer__tools.floating {
+  float:right;
+  margin: 0 0 .5em .5em;
+}
+
+#__markdown-viewer__tools.fixed {
+  position:fixed;
+  top:.5em;
+  right:1em;
+}
+
+#__markdown-viewer__tools.hidden {
+  display:none;
+}
+
+@media print {
+  #__markdown-viewer__tools {
+    display: none;
+  }
+}
+
+#__markdown-viewer__tools a[href]:after {
+  content: "";
+}
+
+/* Style for the menu top */
+label[for=__markdown-viewer__show-tools] {
+  display:block;
+  padding:0 18px 0 12px;
+  line-height:3em;
+  background:#333;
+  cursor:pointer;
+  border-radius: .5em;
+  min-height: 3em;
+  width: .9em;
+  float: right;
+}
+
+input#__markdown-viewer__show-tools:not(:checked) ~ label {
+  margin-left: -.9em;
+}
+
+input#__markdown-viewer__show-tools:checked ~ label {
+}
+
+label[for=__markdown-viewer__show-tools]:before{
+}
+
+label[for=__markdown-viewer__show-tools]:after {
+  content:"";
+  display:inline-block;
+  float:right;
+  margin-top:1.5em;
+  right:5px;
+  width:0;
+  height:0;
+  border-style: solid;
+  border-color: rgba(255,255,255,.5) transparent;
+  border-width: 4px 4px 0 4px;
+  transition:border-bottom .1s, border-top .1s .1s;
+}
+
+input#__markdown-viewer__show-tools:checked ~ label:after {
+  border-top-width:0;
+  border-bottom-width:4px;
+  transition:border-top .1s, border-bottom .1s .1s;
+}
+
+/* hide the input that tracks the menu's visibility */
+input#__markdown-viewer__show-tools {
+  display:none;
+}
+
+/* style, and hide/show menu items based on the input being checked */
+#__markdown-viewer__tools > .toggleable {
+  overflow:hidden;
+  transition-property:max-height, max-width, padding-top, padding-bottom, margin-top, margin-bottom;
+  transition-duration:0.5s;
+}
+
+input#__markdown-viewer__show-tools:checked ~ .toggleable {
+  max-width: 2000px;
+  max-height:300px;
+  transition-timing-function:ease-in;
+}
+
+input#__markdown-viewer__show-tools:not(:checked) ~ .toggleable {
+  max-height:0;
+  max-width:0;
+  transition-timing-function:ease-out;
+  padding-top:0;
+  padding-bottom:0;
+  margin-top:0;
+  margin-bottom:0;
+}
+
+/* style the table of contents and its items */
+#__markdown-viewer__toc {
+  display:block;
+  padding: .5em;
+  border:0;
+}
+
+#__markdown-viewer__toc::before {
+  content: "Table of Contents";
+  text-align: center;
+  display: block;
+  font-weight: bold;
+  text-decoration: underline;
+  margin: 1em auto;
+}
+
+#__markdown-viewer__tools select {
+  max-width: 40%;
+  margin: 0 .5em;
+}
+
+#__markdown-viewer__tools select,
+#__markdown-viewer__toc * {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#__markdown-viewer__toc a {
+  color: white;
+  text-decoration: none;
+}
+
+#__markdown-viewer__toc ul {
+  list-style: inside "• ";
+  padding: 0;
+  margin: 0;
+}
+
+#__markdown-viewer__toc ul ul {
+  padding-left: 1.5em;
+}
+
+
+/* Style the "Download Source" button at the end of the menu */
+#__markdown-viewer__tools > p {
+  text-align:center;
+  padding: 0 .5em;
+}
+
+#__markdown-viewer__download {
+  /* appearance: button; */
+  -moz-appearance: button !important;
+  display:inline-block;
+  text-align: center;
+  text-decoration:none;
+  color:#eee;
+  margin: .5em auto;
+}
+</style><meta name="viewport" content="width=device-width, initial-scale=1"><title>Guidelines for using Piazza</title></head><body><div id="__markdown-viewer__tools" class="floating"><input type="checkbox" id="__markdown-viewer__show-tools"><label for="__markdown-viewer__show-tools"></label><div id="__markdown-viewer__toc" class="toggleable"><ul><li><a href="#guidelines-for-using-piazza">Guidelines for using Piazza</a></li></ul></div><p class="toggleable">Pick a markdown and code style:<br><select id="__markdown-viewer__mdselect"><option value="sss">default</option><option value="github">github</option></select><select id="__markdown-viewer__hlselect"><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/agate.css">agate</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/androidstudio.css">androidstudio</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/arduino-light.css">arduino-light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/arta.css">arta</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/ascetic.css">ascetic</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-cave.dark.css">atelier-cave.dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-cave.light.css">atelier-cave.light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-cave-dark.css">atelier-cave-dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-cave-light.css">atelier-cave-light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-dune.dark.css">atelier-dune.dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-dune.light.css">atelier-dune.light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-dune-dark.css">atelier-dune-dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-dune-light.css">atelier-dune-light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-estuary.dark.css">atelier-estuary.dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-estuary.light.css">atelier-estuary.light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-estuary-dark.css">atelier-estuary-dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-estuary-light.css">atelier-estuary-light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-forest.dark.css">atelier-forest.dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-forest.light.css">atelier-forest.light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-forest-dark.css">atelier-forest-dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-forest-light.css">atelier-forest-light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-heath.dark.css">atelier-heath.dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-heath.light.css">atelier-heath.light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-heath-dark.css">atelier-heath-dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-heath-light.css">atelier-heath-light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-lakeside.dark.css">atelier-lakeside.dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-lakeside.light.css">atelier-lakeside.light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-lakeside-dark.css">atelier-lakeside-dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-lakeside-light.css">atelier-lakeside-light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-plateau.dark.css">atelier-plateau.dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-plateau.light.css">atelier-plateau.light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-plateau-dark.css">atelier-plateau-dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-plateau-light.css">atelier-plateau-light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-savanna.dark.css">atelier-savanna.dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-savanna.light.css">atelier-savanna.light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-savanna-dark.css">atelier-savanna-dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-savanna-light.css">atelier-savanna-light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-seaside.dark.css">atelier-seaside.dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-seaside.light.css">atelier-seaside.light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-seaside-dark.css">atelier-seaside-dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-seaside-light.css">atelier-seaside-light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-sulphurpool.dark.css">atelier-sulphurpool.dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-sulphurpool.light.css">atelier-sulphurpool.light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-sulphurpool-dark.css">atelier-sulphurpool-dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atelier-sulphurpool-light.css">atelier-sulphurpool-light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atom-one-dark.css">atom-one-dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/atom-one-light.css">atom-one-light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/brown-paper.css">brown-paper</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/brown_paper.css">brown_paper</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/codepen-embed.css">codepen-embed</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/color-brewer.css">color-brewer</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/darcula.css">darcula</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/dark.css">dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/darkula.css">darkula</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/default.css">default</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/docco.css">docco</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/dracula.css">dracula</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/far.css">far</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/foundation.css">foundation</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/github.css">github</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/github-gist.css">github-gist</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/googlecode.css">googlecode</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/grayscale.css">grayscale</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/gruvbox-dark.css">gruvbox-dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/gruvbox-light.css">gruvbox-light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/hopscotch.css">hopscotch</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/hybrid.css">hybrid</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/idea.css">idea</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/ir-black.css">ir-black</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/ir_black.css">ir_black</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/kimbie.dark.css">kimbie.dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/kimbie.light.css">kimbie.light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/magula.css">magula</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/monokai.css">monokai</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/monokai-sublime.css">monokai-sublime</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/monokai_sublime.css">monokai_sublime</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/mono-blue.css">mono-blue</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/obsidian.css">obsidian</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/ocean.css">ocean</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/paraiso.dark.css">paraiso.dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/paraiso.light.css">paraiso.light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/paraiso-dark.css">paraiso-dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/paraiso-light.css">paraiso-light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/pojoaque.css">pojoaque</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/purebasic.css">purebasic</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/qtcreator_dark.css">qtcreator_dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/qtcreator_light.css">qtcreator_light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/railscasts.css">railscasts</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/rainbow.css">rainbow</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/routeros.css">routeros</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/school-book.css">school-book</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/school_book.css">school_book</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/solarized-dark.css">solarized-dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/solarized-light.css">solarized-light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/solarized_dark.css">solarized_dark</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/solarized_light.css">solarized_light</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/sunburst.css">sunburst</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/tomorrow.css">tomorrow</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/tomorrow-night.css">tomorrow-night</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/tomorrow-night-blue.css">tomorrow-night-blue</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/tomorrow-night-bright.css">tomorrow-night-bright</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/tomorrow-night-eighties.css">tomorrow-night-eighties</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/vs.css">vs</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/vs2015.css">vs2015</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/xcode.css">xcode</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/xt256.css">xt256</option><option value="moz-extension://707ce085-6b83-4775-9146-a6f9cd389f31/lib/highlightjs/styles/zenburn.css">zenburn</option></select></p><p class="toggleable"><a id="__markdown-viewer__download" download="markdown.html" style="display: none;">Download as HTML</a></p></div><div class="markdownRoot"><h3 id="guidelines-for-using-piazza">Guidelines for using Piazza</h3>
+<p>During the first week of labs, most of you must be getting setup with mimir, MobaXterm, etc, and are setting up an environment on your own machines. Once y'all are ready to learn how to write c++ code, here's a couple of suggestions on how to use piazza effectively.</p>
+<ol>
+<li>Search older posts (try some keywords in your question). Maybe someone has already asked the question 😃</li>
+<li>If someone has already asked a similar question, or if the answer wasn't clear enough, start a follow-up discussion. (Don't forget to resolve the follow-up when someone answers your question).</li>
+<li>If you need to ask a fresh question, first try and select the appropriate folders for your question:
+<ul>
+<li>If it's  a lab or pre-lab related question, select the related lab# folder.</li>
+<li>If it's a project related question, select the related project# folder.</li>
+<li>If it's any c++ question, select the appropriate topic folder. The topics are just the ones described on the cse232 homepage; i.e. types, functions, templates, etc. (New folders will be added as we learn new tropics)</li>
+<li>of course, a question could be related to multiple topics, so go ahead and select multiple folders.</li>
+<li>If you're not sure which one to select, or can't find an appropriate one, just put it in the other folder.</li>
+</ul>
+</li>
+<li>While you're waiting for your question to be answered, scroll through other questions - you might spot something useful. If you see an unanswered question that you know the answer to, go ahead and answer - it may help someone else.</li>
+</ol>
+<p>Guidelines for posting code:</p>
+<ol>
+<li>Feel free to ask questions about code that is confusing, or doesn't work, or doesn't behave like you think it should.</li>
+<li>NEVER post code that you will submit for a project. If you have a question about project code, make it a PRIVATE question. Take this seriously; if you accidentally post code that you meant to submit, write that part again from scratch!    (You can post project code 48 hours after the final due date if you like.)</li>
+<li>Similarly for Labs, please wait until the lab deadline (5 pm Fri) before you post solutions to that weeks lab.</li>
+<li>Don't post your code as a screen-shot or an image. Instead, use the code format button.</li>
+<li>If you answered your own question, or you want to delete your own post for some reason, put the word "delete_me" in your own post summary and it will be deleted. Or you can tag your post with the 'delete_me' folder.</li>
+<li>A lot of questions on piazza are like, "my code doesn't work..", and don't provide the compiler error, or even the necessary bits of code. When making these kinds of posts, try to post only the code fragment that is causing the bug, and definitely provide the error message. Generally the idea is to provide a MCVE so that we can help you better. In fact, it's worth reading the excellent post at the bottom of that page How to debug small programs. Some of this advice applies to experienced programmers, and is specific to SO, but most of it is also applicable for y'all while using piazza.</li>
+<li>Please post your full error messages. If you don't post your full error message and/or the piece of code that is causing trouble, we can't help you with those issues. Also, you'll get more help if you post as "Anonymous to classmates" instead of "Anonymous", since the TAs can see your submissions on mimir.</li>
+</ol>
+<p>What can you ask?</p>
+<ol>
+<li>Obviously any c++ question.</li>
+<li>If it's a project question, you are more likely to get a suggestion than a direct answer. (you can rephrase your question so that it doesn't sound like a project question, but gives you the necessary answer).</li>
+<li>To reiterate the above point, feel free to ask questions about code that is confusing, or doesn't work, or doesn't behave like you think it should.</li>
+<li>You can ask any programming related question, e.g. "this is something I can do in python/haskell/etc, but can't seem to do in C++. Why is that?". Or, "What is the real difference between some code in one language and c++ (maybe syntax, or behaviour, or performance, etc)?".</li>
+<li>You can even post stuff about things like code-golf, etc. Note however, this kind of stuff falls into the "fun" category, and is not really how you would write code. So responses to these questions may not be as prompt as the others.</li>
+</ol>
+</div></body></html>
