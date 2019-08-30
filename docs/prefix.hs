@@ -22,8 +22,8 @@ toStdD K = "∧"
 
 stdize :: Pred -> String
 stdize (PredN c) = [c]
-stdize (PredM m p) = toStdM m ++ "(" ++ stdize p ++ ")"
-stdize (PredD d p q) = "(" ++ stdize p ++ ")" ++ toStdD d ++ "(" ++ stdize q ++ ")"
+stdize (PredM m p) = toStdM m ++ stdize p
+stdize (PredD d p q) = "(" ++ stdize p ++ toStdD d ++ stdize q ++ ")"
 
 readS :: String -> [(Pred, String)]
 readS "" = []
@@ -44,3 +44,6 @@ instance Read Pred where
 
 comp :: String -> String
 comp = stdize . read
+
+main :: IO [()]
+main = getContents >>= mapM (putStrLn . comp) . lines
