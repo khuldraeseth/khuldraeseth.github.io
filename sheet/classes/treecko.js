@@ -11,14 +11,14 @@ classes.treecko =
             "moves": 4
         },
 
-        "stage1": {
+        "stage_1": {
             "level": 3,
             "name": "Grovyle",
             "skills": 4,
             "moves": 6
         },
 
-        "stage2": {
+        "stage_2": {
             "level": 7,
             "name": "Sceptile",
             "skills": 6,

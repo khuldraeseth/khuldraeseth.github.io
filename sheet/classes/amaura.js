@@ -11,7 +11,7 @@ classes.amaura =
             "moves": 6
         },
 
-        "stage1": {
+        "stage_1": {
             "level": 8,
             "name": "Aurorus",
             "skills": 4,

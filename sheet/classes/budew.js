@@ -1,22 +1,24 @@
 classes.budew = 
 
 {
+    "base": "budew",
+    
     "evos": {
         "basic": {
             "level": 1,
-            "name": "Treecko",
+            "name": "Budew",
             "skills": 2,
             "moves": 4
         },
 
-        "stage1": {
+        "stage_1": {
             "level": 3,
             "name": "Roselia",
             "skills": 4,
             "moves": 6
         },
 
-        "stage2": {
+        "stage_2": {
             "level": 7,
             "name": "Roserade",
             "skills": 5,
@@ -34,8 +36,8 @@ classes.budew =
     ],
 
     "egg-groups": [
-        "grass",
-        "fairy"
+        "field",
+        "grass"
     ],
 
     "saves": {
@@ -45,7 +47,7 @@ classes.budew =
 
     "abilities": {
         "favored_enemy": 1,
-        "fighting_style": 2,
+        "fighting_style_ranger": 2,
         "hunter_3": 3,
         "imbue": 3,
         "natural_cure": 6,
