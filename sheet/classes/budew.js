@@ -11,15 +11,15 @@ classes.budew =
 
         "stage1": {
             "level": 3,
-            "name": "Grovyle",
-            "skills": 2,
+            "name": "Roselia",
+            "skills": 4,
             "moves": 6
         },
 
         "stage2": {
             "level": 7,
-            "name": "Sceptile",
-            "skills": 2,
+            "name": "Roserade",
+            "skills": 5,
             "moves": 7
         }
     },
@@ -30,46 +30,58 @@ classes.budew =
     ],
 
     "races": [
-        "dragon",
-        "monster"
+        "fairy"
     ],
 
     "egg-groups": [
-        "dragon",
         "grass",
-        "monster"
+        "fairy"
     ],
 
     "saves": {
+        "str": 1,
         "dex": 1,
-        "int": 1,
-        "wis": 15
     },
 
     "abilities": {
-        "overgrow": 1,
-        "unburden": 1,
-        "sneak_attack": 1,
-        "cunning_action": 2,
-        "uncanny_dodge": 5,
-        "evasion": 7,
-        "reliable_talent": 11,
-        "elusive": 18
+        "favored_enemy": 1,
+        "fighting_style": 2,
+        "hunter_3": 3,
+        "imbue": 3,
+        "natural_cure": 6,
+        "hunter_7": 7,
+        "vanish": 14,
+        "hunter_15": 15,
+        "feral_senses": 18,
+        "roserade_mastery": 20
     },
 
     "move_pool": {
-        "leer": 1,
         "absorb": 1,
-        "pursuit": 3,
-        "screech": 3,
-        "leaf_blade": 7,
-        "agility": 7,
-        "detect": 9,
+        "growth": 1,
+        "water_sport": 1,
+        "stun_spore": 1,
+        "poison_sting": 1,
+        "plant_growth": 3,
+        "magical_leaf": 3,
+        "grass_whistle": 3,
+        "locate_object": 3,
+        "giga_drain": 5,
+        "spikes": 5,
+        "grass_knot": 7,
+        "locate_creature": 7,
         "synthesis": 9,
-        "plant_growth": 11,
-        "false_swipe": 12,
-        "leaf_storm": 13,
-        "tree_stride": 15
+        "defog": 9,
+        "toxic": 9,
+        "minimize": 9,
+        "petal_dance": 11,
+        "commune_with_nature": 11,
+        "sunny_day": 11,
+        "rain_dance": 11,
+        "water_walk": 11,
+        "tree_stride": 13,
+        "toxic_spikes": 13,
+        "seduce": 17
     },
 
     "skill_pool": [
