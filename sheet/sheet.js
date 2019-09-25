@@ -37,10 +37,25 @@ function updateSkills(skill_pool) {
     });
 }
 
+function modifier(stat) {
+    if (stat == "") {
+        return "";
+    }
+    result = Math.floor((stat - 10) / 2);
+    return result < 0 ? result : "+" + result;
+}
+
+function updateModifiers() {
+    document.getElementsByName("ability").forEach(function(elem) {
+        document.getElementById(elem.id + "_mod").value = modifier(elem.value);
+    });
+}
+
 function update() {
 //    document.getElementsByName("skill").forEach(function(x) {if (x.checked) {alert(x.value);}});
 //    document.getElementsByName("name")[0].value = "A nice name";
 //    document.getElementsByName("ability").forEach(alertStat);
+    updateModifiers();
     setProficiency(document.getElementById("level").value);
     var pkmn = classes[document.getElementById("pokemon").value];
 //    document.getElementsByName("skill").forEach(updateSkill(classes[pkmn].skill_pool));

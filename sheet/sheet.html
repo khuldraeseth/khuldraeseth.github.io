@@ -35,18 +35,29 @@
             </select><br>
 
             Level:<br>
-            <input type="number" id="level" onchange="Javascript:update()"><br>
+            <input type="number" id="level" min="1" max="20" onchange="Javascript:update()"><br>
 
             Proficiency bonus:<br>
-            <input type="number" id="proficiency"><br>
+            <input type="text" id="proficiency" disabled="disabled"><br>
 
             Stats:<br>
-            Str: <input type="number" name="ability" id="Str"><br>
-            Dex: <input type="number" name="ability" id="Dex"><br>
-            Con: <input type="number" name="ability" id="Con"><br>
-            Int: <input type="number" name="ability" id="Int"><br>
-            Wis: <input type="number" name="ability" id="Wis"><br>
-            Cha: <input type="number" name="ability" id="Cha"><br>
+            Str: <input type="number" name="ability" id="str" min="1" max="20" onchange="Javascript:update()">
+            <input type="text" name="modifier" id="str_mod" disabled="disabled"><br>
+
+            Dex: <input type="number" name="ability" id="dex" min="1" max="20" onchange="Javascript:update()">
+            <input type="text" name="modifier" id="dex_mod" disabled="disabled"><br>
+
+            Con: <input type="number" name="ability" id="con" min="1" max="20" onchange="Javascript:update()">
+            <input type="text" name="modifier" id="con_mod" disabled="disabled"><br>
+
+            Int: <input type="number" name="ability" id="int" min="1" max="20" onchange="Javascript:update()">
+            <input type="text" name="modifier" id="int_mod" disabled="disabled"><br>
+
+            Wis: <input type="number" name="ability" id="wis" min="1" max="20" onchange="Javascript:update()">
+            <input type="text" name="modifier" id="wis_mod" disabled="disabled"><br>
+
+            Cha: <input type="number" name="ability" id="cha" min="1" max="20" onchange="Javascript:update()">
+            <input type="text" name="modifier" id="cha_mod" disabled="disabled"><br>
 
             Skills:<br>
             <input type="checkbox" name="skill" id="skill:acrobatics">Acrobatics<br>
