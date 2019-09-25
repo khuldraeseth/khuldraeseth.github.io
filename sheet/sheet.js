@@ -9,6 +9,9 @@ function alertStat(elem) {
 }
 
 function prof(lvl) {
+    if (lvl == 0) {
+        return "";
+    }
     return 1 + Math.ceil(lvl / 4);
 }
 
@@ -38,7 +41,7 @@ function updateSkills(skill_pool) {
 }
 
 function modifier(stat) {
-    if (stat == "") {
+    if (stat == 0) {
         return "";
     }
     result = Math.floor((stat - 10) / 2);
@@ -58,6 +61,8 @@ function update() {
     updateModifiers();
     setProficiency(document.getElementById("level").value);
     var pkmn = classes[document.getElementById("pokemon").value];
+    if (pkmn != undefined) {
+        updateSkills(pkmn.skill_pool);
+    }
 //    document.getElementsByName("skill").forEach(updateSkill(classes[pkmn].skill_pool));
-    updateSkills(pkmn.skill_pool);
 }
