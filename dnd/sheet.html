@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+
+<html>
+    <head>
+        <!--link rel="shortcut icon" type="image/x-icon" href="favicon.ico"-->
+
+        <script type="text/javascript">
+            classes = {};
+        </script>
+
+        <!--script type="text/javascript" src="classes/amaura.js"></script>
+        <script type="text/javascript" src="classes/budew.js"></script>
+        <script type="text/javascript" src="classes/chespin.js"></script>
+        <script type="text/javascript" src="classes/cleffa.js"></script>
+        <script type="text/javascript" src="classes/treecko.js"></script-->
+        <script type="text/javascript" src="sheet.js"></script>
+
+        <title>5e D&D Character Sheet</title>
+    </head>
+
+    <body>
+        <form action="JavaScript:update()">
+            Character name:<br>
+            <input type="text" name="name"><br>
+
+            Class:<br>
+            <select id="class" onchange="Javascript:update()">
+                <option></option>
+                <!--option value="amaura">Amaura</option>
+                <option value="budew">Budew</option>
+                <option value="chespin">Chespin</option>
+                <option value="cleffa">Cleffa</option>
+                <option value="treecko">Treecko</option-->
+            </select><br>
+
+            Level:<br>
+            <input type="number" id="level" min="1" max="20" onchange="Javascript:update()"><br>
+
+            Proficiency bonus:<br>
+            <input type="text" id="proficiency" disabled="disabled"><br>
+
+            Stats:<br>
+            Str: <input type="number" name="ability" id="str" min="1" max="20" onchange="Javascript:update()">
+            <input type="text" name="modifier" id="str_mod" disabled="disabled"><br>
+
+            Dex: <input type="number" name="ability" id="dex" min="1" max="20" onchange="Javascript:update()">
+            <input type="text" name="modifier" id="dex_mod" disabled="disabled"><br>
+
+            Con: <input type="number" name="ability" id="con" min="1" max="20" onchange="Javascript:update()">
+            <input type="text" name="modifier" id="con_mod" disabled="disabled"><br>
+
+            Int: <input type="number" name="ability" id="int" min="1" max="20" onchange="Javascript:update()">
+            <input type="text" name="modifier" id="int_mod" disabled="disabled"><br>
+
+            Wis: <input type="number" name="ability" id="wis" min="1" max="20" onchange="Javascript:update()">
+            <input type="text" name="modifier" id="wis_mod" disabled="disabled"><br>
+
+            Cha: <input type="number" name="ability" id="cha" min="1" max="20" onchange="Javascript:update()">
+            <input type="text" name="modifier" id="cha_mod" disabled="disabled"><br>
+
+            Skills:<br>
+            <input type="checkbox" name="skill" id="skill:acrobatics">Acrobatics<br>
+            <input type="checkbox" name="skill" id="skill:animal_handling">Animal Handling<br>
+            <input type="checkbox" name="skill" id="skill:arcana">Arcana<br>
+            <input type="checkbox" name="skill" id="skill:athletics">Athletics<br>
+            <input type="checkbox" name="skill" id="skill:deception">Deception<br>
+            <input type="checkbox" name="skill" id="skill:history">History<br>
+            <input type="checkbox" name="skill" id="skill:insight">Insight<br>
+            <input type="checkbox" name="skill" id="skill:intimidation">Intimidation<br>
+            <input type="checkbox" name="skill" id="skill:investigation">Investigation<br>
+            <input type="checkbox" name="skill" id="skill:medicine">Medicine<br>
+            <input type="checkbox" name="skill" id="skill:nature">Nature<br>
+            <input type="checkbox" name="skill" id="skill:perception">Perception<br>
+            <input type="checkbox" name="skill" id="skill:performance">Performance<br>
+            <input type="checkbox" name="skill" id="skill:persuasion">Persuasion<br>
+            <input type="checkbox" name="skill" id="skill:religion">Religion<br>
+            <input type="checkbox" name="skill" id="skill:sleight_of_hand">Sleight of Hand<br>
+            <input type="checkbox" name="skill" id="skill:stealth">Stealth<br>
+            <input type="checkbox" name="skill" id="skill:survival">Survival<br>
+
+            <input type="submit" value="Update">
+        </form>
+    </body>
+</html>
