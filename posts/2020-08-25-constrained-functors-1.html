@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Blog - Constrained Functors, part 1</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="../">Blog</a>
+            </div>
+            <div id="navigation">
+                <a href="../">Home</a>
+                <a href="../about.html">About</a>
+                <a href="../contact.html">Contact</a>
+                <a href="../archive.html">Archive</a>
+            </div>
+        </div>
+
+        <div id="content">
+            <h1>Constrained Functors, part 1</h1>
+
+            <div class="info">
+    Posted on August 25, 2020
+    
+</div>
+
+<p>I follow <a href="https://reddit.com/r/haskell">r/haskell</a> on Reddit, and there was a post this afternoon that caught my eye. <a href="https://www.reddit.com/r/haskell/comments/igk7hv/why_arent_hashsets_functors/?utm_source=share&amp;utm_medium=web2x&amp;context=3">Why aren’t (Hash)Sets Functors?</a> The title really says it all—why is <a href="https://hackage.haskell.org/package/containers-0.6.3.1/docs/Data-Set.html#v:map"><code>Data.Set.map</code></a> (from the package <code>containers</code> on Hackage and Stackage) not sufficient to provide a <code>Functor</code> instance for <code>Data.Set.Set</code>?</p>
+<p>A <a href="https://www.reddit.com/r/haskell/comments/igk7hv/why_arent_hashsets_functors/g2u82y0?utm_source=share&amp;utm_medium=web2x&amp;context=3">response</a> from u/Lalaithion42 says it succinctly. <code>fmap</code> and <code>Data.Set.map</code> look similar in type, but they differ in their constraints. This makes sense—a <code>Functor</code> allows mapping using an arbitrary function <code>f :: a -&gt; b</code>, which obviously won’t work on an ordered set. There’s no requirement here that <code>b</code> even be orderable, so what would “ordered set” even mean? And even if we fortuitously have <code>Ord b</code>, there’s no guarantee the resulting “set” will even be that unless our function <code>f</code> is <a href="https://hackage.haskell.org/package/containers-0.6.3.1/docs/Data-Set.html#v:mapMonotonic">increasing</a>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">fmap</span><span class="ot">  ::</span> (<span class="dt">Functor</span> f) <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a     <span class="ot">-&gt;</span> f b</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>S.map<span class="ot"> ::</span> (<span class="dt">Ord</span> b)     <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> <span class="dt">S.Set</span> a <span class="ot">-&gt;</span> <span class="dt">S.Set</span> b</span></code></pre></div>
+<p>So sets are not functors. But clearly they can be reasonably mapped over under a certain condition—namely, the image type of the map must be orderable. Now, loving Haskell as I do, I decided it would be almost a crime to let this go without at least trying to figure out some abstraction for this notion. Thus was class <code>ConstrainedFunctor</code> born.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="ot">{-# LANGUAGE AllowAmbiguousTypes   #-}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="ot">{-# LANGUAGE ConstraintKinds       #-}</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="ot">{-# LANGUAGE KindSignatures        #-}</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="ot">{-# LANGUAGE MultiParamTypeClasses #-}</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="kw">import</span> <span class="dt">Data.Kind</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="kw">class</span> <span class="dt">ConstrainedFunctor</span> (<span class="ot">c ::</span> <span class="dt">Type</span> <span class="ot">-&gt;</span> <span class="dt">Constraint</span>) (<span class="ot">f ::</span> <span class="dt">Type</span> <span class="ot">-&gt;</span> <span class="dt">Type</span>) <span class="kw">where</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="ot">    cfmap ::</span> (c b) <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</span></code></pre></div>
+<p><code>ConstrainedFunctor c</code> is the class of types over which we can map any function <code>(c b) =&gt; a -&gt; b</code>. In our <code>S.Set</code> example, we need <code>Ord</code>, so let’s try to write this instance:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">instance</span> <span class="dt">ConstrainedFunctor</span> <span class="dt">Ord</span> <span class="dt">S.Set</span> <span class="kw">where</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>    sfmap <span class="ot">=</span> S.map</span></code></pre></div>
+<p>Very nice. And trying it out in GHCi works almost as expected:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>λ<span class="op">&gt;</span> S.fromList [<span class="op">-</span><span class="dv">3</span> <span class="op">..</span> <span class="dv">6</span>]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>fromList [<span class="op">-</span><span class="dv">3</span>,<span class="op">-</span><span class="dv">2</span>,<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="ot">it ::</span> (<span class="dt">Ord</span> a, <span class="dt">Num</span> a, <span class="dt">Enum</span> a) <span class="ot">=&gt;</span> <span class="dt">S.Set</span> a</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>λ<span class="op">&gt;</span> sfmap (<span class="op">^</span><span class="dv">2</span>) it</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="op">&lt;</span>interactive<span class="op">&gt;:</span><span class="dv">2</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>    • <span class="dt">Illegal</span> constraint<span class="op">:</span> c b (<span class="dt">Use</span> <span class="dt">ConstraintKinds</span> to permit this)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>    • <span class="dt">When</span> checking the inferred <span class="kw">type</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a><span class="ot">        it ::</span> <span class="kw">forall</span> (<span class="ot">c ::</span> <span class="op">*</span> <span class="ot">-&gt;</span> <span class="dt">Constraint</span>) b<span class="op">.</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>              (c b, <span class="dt">ConstrainedFunctor</span> c <span class="dt">S.Set</span>, <span class="dt">Num</span> b, <span class="dt">Ord</span> b, <span class="dt">Enum</span> b) <span class="ot">=&gt;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>              <span class="dt">S.Set</span> b</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>λ<span class="op">&gt;</span> <span class="op">:</span>set <span class="op">-</span><span class="dt">XTypeApplications</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>λ<span class="op">&gt;</span> sfmap <span class="op">@</span><span class="dt">Ord</span> (<span class="op">^</span><span class="dv">2</span>) it</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>fromList [<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">9</span>,<span class="dv">16</span>,<span class="dv">25</span>,<span class="dv">36</span>]</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a><span class="ot">it ::</span> (<span class="dt">Num</span> b, <span class="dt">Ord</span> b, <span class="dt">Enum</span> b) <span class="ot">=&gt;</span> <span class="dt">S.Set</span> b</span></code></pre></div>
+<p>We need the <code>TypeApplications</code> extension enabled to tell the compiler which <code>ConstrainedFunctor</code> instance we’re taking <code>sfmap</code> from, as one type could reasonably have more than one such instance. I think; this is all still pretty spooky to a not-quite-beginner like me.</p>
+<p>Now, any <code>Functor</code> is also a <code>ConstrainedFunctor c</code> for all <code>c</code>. Let’s put this to code:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="ot">{-# LANGUAGE FlexibleInstances #-}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="kw">instance</span> (<span class="dt">Functor</span> f) <span class="ot">=&gt;</span> <span class="dt">ConstrainedFunctor</span> c f <span class="kw">where</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>    <span class="fu">fmap</span> <span class="ot">=</span> sfmap</span></code></pre></div>
+<p>This compiles fine, but attempting to use it now fails! <code>sfmap @Ord (^2) it</code> complains about overlapping instances for <code>ConstrainedFunctor Ord S.Set</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="dt">Matching</span> instances<span class="op">:</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>    <span class="kw">instance</span> [safe] <span class="dt">Functor</span> f <span class="ot">=&gt;</span> <span class="dt">ConstrainedFunctor</span> c f</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>    <span class="kw">instance</span> [safe] <span class="dt">ConstrainedFunctor</span> <span class="dt">Ord</span> <span class="dt">Set</span></span></code></pre></div>
+<p>Interesting. <code>S.Set</code> is no <code>Functor</code>, so why in the world is that first instance a candidate? Some thought on my part yielded nothing (admittedly, it is past 11 PM). So I turned to a bottom-up view of this relationship rather than a top-down one.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="ot">{-# LANGUAGE FlexibleContexts      #-}</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="ot">{-# LANGUAGE TypeApplications      #-}</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="ot">{-# LANGUAGE UndecidableInstances  #-}</span>    <span class="co">-- uh-oh</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="kw">class</span> <span class="dt">Yes</span> a</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="kw">instance</span> <span class="dt">Yes</span> a</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="kw">instance</span> (<span class="dt">ConstrainedFunctor</span> <span class="dt">Yes</span> f) <span class="ot">=&gt;</span> <span class="dt">Functor</span> f <span class="kw">where</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a>    <span class="fu">fmap</span> <span class="ot">=</span> sfmap <span class="op">@</span><span class="dt">Yes</span></span></code></pre></div>
+<p>And this one works! For the set example from before, at least. Sure, <code>UndecidableInstances</code> is pretty ugly (or so I’ve heard), but it scares me less than the deprecated <code>OverlappingInstances</code> and per-instance pragmas I’m supposed to use instead.</p>
+<p>Might as well implement a few <code>Functor</code> instances using this always-satisfied <code>Yes</code> constraint, huh?</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">instance</span> <span class="dt">ConstrainedFunctor</span> <span class="dt">Yes</span> <span class="dt">Maybe</span> <span class="kw">where</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>    sfmap f mx <span class="ot">=</span> <span class="kw">case</span> mx <span class="kw">of</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>        <span class="dt">Nothing</span> <span class="ot">-&gt;</span> <span class="dt">Nothing</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>        <span class="dt">Just</span> x  <span class="ot">-&gt;</span> <span class="dt">Just</span> (f x)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="kw">instance</span> <span class="dt">ConstrainedFunctor</span> <span class="dt">Yes</span> [] <span class="kw">where</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>    sfmap <span class="ot">=</span> <span class="fu">map</span></span></code></pre></div>
+<p>Everything still compiles, nice! Now, attempting to use either <code>Functor</code> instance will give us an error thanks to overlapping instances, and for good reason this time. But that’s not a fault of the code—this should be pretty easily remedied by simply using a new but identical typeclass instead of <code>Data.Functor.Functor</code>.</p>
+<p>The clock approaches midnight. I’ll call it a post here. Gonna try to put some more thought toward that top-down view, and should I get nowhere there, I’ll see what from <code>base</code> I can translate to this <code>ConstrainedFunctor</code>—that’ll be part 2.</p>
+
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    </body>
+</html>
