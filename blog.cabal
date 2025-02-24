@@ -12,8 +12,8 @@ description:   This is my personal blog.
 executable site
   main-is:          site.hs
   build-depends:
-      base    >=4    && <5
-    , hakyll  >=4.16 && <4.17
+      base
+    , hakyll
 
   ghc-options:      -threaded -rtsopts -with-rtsopts=-N
   default-language: GHC2021
