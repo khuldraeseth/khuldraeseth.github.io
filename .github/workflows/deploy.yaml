@@ -21,7 +21,7 @@ jobs:
         uses: haskell-actions/setup@v2
         id: setup
         with:
-          ghc-version: latest
+          ghc-version: 9.10.1
           cabal-version: latest
           cabal-update: true
 
