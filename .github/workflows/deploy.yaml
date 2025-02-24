@@ -22,7 +22,7 @@ jobs:
         id: setup
         with:
           ghc-version: latest
-          cabal-version: 3.10.3.0
+          cabal-version: latest
           cabal-update: true
 
       - name: Configure build
