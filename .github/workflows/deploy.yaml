@@ -4,7 +4,7 @@ run-name: Deployment to GitHub Pages
 on:
   push:
     branches:
-      - devel
+      - master
 
 jobs:
   build:
